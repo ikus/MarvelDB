@@ -18,6 +18,11 @@ import com.example.marveldb.R
 import com.example.marveldb.ui.placeholder.PlaceholderContent;
 import com.example.marveldb.databinding.FragmentItemListBinding
 import com.example.marveldb.databinding.ItemListContentBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -27,8 +32,12 @@ import com.example.marveldb.databinding.ItemListContentBinding
  * item details. On larger screens, the Navigation controller presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-
+@AndroidEntryPoint
 class ItemListFragment : Fragment() {
+
+    @Inject
+    internal lateinit var getCharactersUseCase: GetCharactersUseCase
+
 
     /**
      * Method to intercept global key events in the
@@ -84,6 +93,10 @@ class ItemListFragment : Fragment() {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         setupRecyclerView(recyclerView, itemDetailFragmentContainer)
+        CoroutineScope(Dispatchers.IO).launch {
+            //isLoading.postValue(true)
+            val result = getCharactersUseCase()
+        }
     }
 
     private fun setupRecyclerView(

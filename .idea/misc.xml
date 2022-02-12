@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/aaa/AndroidStudioProjects/MarvelDB2/app/src/main/res/layout/activity_item_detail.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/aaa/AndroidStudioProjects/MarvelDB2/app/src/main/res/layout/fragment_item_detail.xml" value="0.25" />
+        <entry key="..\:/Users/aaa/AndroidStudioProjects/MarvelDB2/app/src/main/res/layout/fragment_item_list.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/aaa/AndroidStudioProjects/MarvelDB2/app/src/main/res/layout/item_list_content.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/aaa/AndroidStudioProjects/MarvelDB2/app/src/main/res/layout/item_movie.xml" value="0.24094202898550723" />
       </map>
     </option>
   </component>
