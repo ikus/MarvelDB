@@ -1,4 +1,4 @@
-package com.example.marveldb.placeholder
+package com.example.marveldb.ui.placeholder
 
 import java.util.ArrayList
 import java.util.HashMap

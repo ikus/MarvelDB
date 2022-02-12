@@ -1,4 +1,4 @@
-package com.example.marveldb
+package com.example.marveldb.ui
 
 import android.content.ClipData
 import android.content.ClipDescription
@@ -14,7 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.marveldb.placeholder.PlaceholderContent;
+import com.example.marveldb.R
+import com.example.marveldb.ui.placeholder.PlaceholderContent;
 import com.example.marveldb.databinding.FragmentItemListBinding
 import com.example.marveldb.databinding.ItemListContentBinding
 
