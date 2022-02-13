@@ -41,7 +41,6 @@ interface CharacterApiClient {
     @GET("movie/{movie_id}")
     suspend fun getDetailMovie(@Path("movie_id") movie_id: String?): Response<DetailModel?>?
 
-
     @GET("movie/upcoming")
     suspend fun getUpcomingMovie(): Response<UpcomingModel?>?
 

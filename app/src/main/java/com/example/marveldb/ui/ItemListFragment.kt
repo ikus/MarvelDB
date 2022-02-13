@@ -12,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.ViewCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldb.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.ui.placeholder.PlaceholderContent;
 import com.example.marveldb.databinding.FragmentItemListBinding
 import com.example.marveldb.databinding.ItemListContentBinding
@@ -35,6 +37,13 @@ class ItemListFragment : Fragment() {
 
     @Inject
     internal lateinit var getCharactersUseCase: GetCharactersUseCase
+    @Inject
+    internal lateinit var repository: CharacterRepository
+
+    private lateinit var nestedScrollView:NestedScrollView
+    private lateinit var recyclerView: RecyclerView
+    private var page:Int =0
+    private var limit:Int =20
 
     private val unhandledKeyEventListenerCompat =
         ViewCompat.OnUnhandledKeyEventListenerCompat { v, event ->
@@ -77,8 +86,10 @@ class ItemListFragment : Fragment() {
 
         ViewCompat.addOnUnhandledKeyEventListener(view, unhandledKeyEventListenerCompat)
 
-        val recyclerView: RecyclerView = binding.itemList
+        //val recyclerView: RecyclerView = binding.itemList
 
+        recyclerView =  binding.itemList
+        nestedScrollView = view.findViewById(R.id.item_list_container)
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
@@ -118,14 +129,45 @@ class ItemListFragment : Fragment() {
                             character
                         )
                     }
-
                     //recyclerView.addItemDecoration(decoration)
 
+                    getData(page,limit)
+                    nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
+                        override fun onScrollChange(
+                            v: NestedScrollView?,
+                            scrollX: Int,
+                            scrollY: Int,
+                            oldScrollX: Int,
+                            oldScrollY: Int
+                        ) {
+                            //TODO("Not yet implemented")
+                            if(scrollY== (v?.getChildAt(0)?.measuredHeight!! - v?.measuredHeight!!)){
+                                page++
+                                //Swhoe progress bar
+                                getData(page,limit)
+                            }
+                        }
+
+                    } )
                 }else{
                     //TODO:Show error
                 }
             }
 
+        }
+    }
+
+    private fun getData(page: Int, limit: Int) {
+        val offset= page*100;
+        CoroutineScope(Dispatchers.IO).launch {
+           var result = repository.getAllCharactersFromApi(offset,100)
+            activity?.runOnUiThread{
+            recyclerView.adapter = MovieAdapter(result) { character ->
+                onItemSelected(
+                    character
+                )
+            }
+            }
         }
     }
 
@@ -135,3 +177,4 @@ class ItemListFragment : Fragment() {
         _binding = null
     }
 }
+
