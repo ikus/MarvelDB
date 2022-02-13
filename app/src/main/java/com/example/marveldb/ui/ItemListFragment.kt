@@ -88,16 +88,7 @@ class ItemListFragment : Fragment() {
     }
 
     fun onItemSelected(movie:  com.example.marveldb.data.model.Character){
-        /*
-        Toast.makeText(
-            activity,
-            movie.title,
-            Toast.LENGTH_SHORT
-        ).show()
-        */
         //TODO: Esta es la parte que hayq ue refactorizar.
-        //val item = itemView.tag as PlaceholderContent.PlaceholderItem
-
         val bundle = Bundle()
         bundle.putString(
             ItemDetailFragment.ARG_ITEM_ID,
@@ -120,27 +111,9 @@ class ItemListFragment : Fragment() {
 
             activity?.runOnUiThread{
                 if ( result !=null ) {
-                    //movieModel.postValue(result[0])
-                    //isLoading.postValue(false)
-
-                    //result[0].posterPath.
-
-
-
-                    //var maviesdominio =  result.map { it.toDomain() }
-
-                    //Log.e("INFO:::",maviesdominio.toString())
-
-                    //val manager = LinearLayoutManager(activity)
-
                     val manager = GridLayoutManager(activity,2 )
-                    //val decoration = DividerItemDecoration(activity, manager.orientation)
-
                     recyclerView.layoutManager = manager
-
-
-
-                    recyclerView.adapter = MovieAdapter(result/*emptyList()*/ /*MovieProvider.movieList*/) { character ->
+                    recyclerView.adapter = MovieAdapter(result) { character ->
                         onItemSelected(
                             character
                         )
@@ -153,146 +126,9 @@ class ItemListFragment : Fragment() {
                 }
             }
 
-
-
-
-            /*
-            runOnUiThread{
-                if (!result.isNullOrEmpty()) {
-                    //movieModel.postValue(result[0])
-                    //isLoading.postValue(false)
-
-                    //result[0].posterPath.
-
-
-                /*
-                    var maviesdominio =  result.map { it.toDomain() }
-                    Log.e("INFO:::",maviesdominio.toString())
-
-                    val manager = LinearLayoutManager(applicationContext)
-                    val decoration = DividerItemDecoration(applicationContext, manager.orientation)
-                    binding.recyvlerViewMovies.layoutManager = manager
-
-                    binding.recyvlerViewMovies.adapter = MovieAdapter(maviesdominio/*emptyList()*/ /*MovieProvider.movieList*/) { movie ->
-                        onItemSelected(
-                            movie
-                        )
-                    }
-                    binding.recyvlerViewMovies.addItemDecoration(decoration)
-                    */
-                }else{
-                    //TODO:Show error
-                }
-            }
-
-             */
-
-
         }
-
-
-/*
-        CoroutineScope(Dispatchers.IO).launch {
-            //isLoading.postValue(true)
-            val result = getCharactersUseCase()
-        }
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(
-            PlaceholderContent.ITEMS, itemDetailFragmentContainer
-        )
-
- */
     }
 
-    class SimpleItemRecyclerViewAdapter(
-        private val values: List<PlaceholderContent.PlaceholderItem>,
-        private val itemDetailFragmentContainer: View?
-    ) :
-        RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-            val binding =
-                ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return ViewHolder(binding)
-
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = values[position]
-            holder.idView.text = item.id
-            holder.contentView.text = item.content
-
-            with(holder.itemView) {
-                tag = item
-                setOnClickListener { itemView ->
-                    val item = itemView.tag as PlaceholderContent.PlaceholderItem
-                    val bundle = Bundle()
-                    bundle.putString(
-                        ItemDetailFragment.ARG_ITEM_ID,
-                        item.id
-                    )
-                    if (itemDetailFragmentContainer != null) {
-                        itemDetailFragmentContainer.findNavController()
-                            .navigate(R.id.fragment_item_detail, bundle)
-                    } else {
-                        itemView.findNavController().navigate(R.id.show_item_detail, bundle)
-                    }
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    /**
-                     * Context click listener to handle Right click events
-                     * from mice and trackpad input to provide a more native
-                     * experience on larger screen devices
-                     */
-                    setOnContextClickListener { v ->
-                        val item = v.tag as PlaceholderContent.PlaceholderItem
-                        Toast.makeText(
-                            v.context,
-                            "Context click of item " + item.id,
-                            Toast.LENGTH_LONG
-                        ).show()
-                        true
-                    }
-                }
-
-                setOnLongClickListener { v ->
-                    // Setting the item id as the clip data so that the drop target is able to
-                    // identify the id of the content
-                    val clipItem = ClipData.Item(item.id)
-                    val dragData = ClipData(
-                        v.tag as? CharSequence,
-                        arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN),
-                        clipItem
-                    )
-
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        v.startDragAndDrop(
-                            dragData,
-                            View.DragShadowBuilder(v),
-                            null,
-                            0
-                        )
-                    } else {
-                        v.startDrag(
-                            dragData,
-                            View.DragShadowBuilder(v),
-                            null,
-                            0
-                        )
-                    }
-                }
-            }
-        }
-
-        override fun getItemCount() = values.size
-
-        inner class ViewHolder(binding: ItemListContentBinding) :
-            RecyclerView.ViewHolder(binding.root) {
-            val idView: TextView = binding.idText
-            val contentView: TextView = binding.content
-        }
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
