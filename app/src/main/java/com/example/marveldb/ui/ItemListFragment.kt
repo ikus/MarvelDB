@@ -25,6 +25,7 @@ import com.example.marveldb.databinding.FragmentItemListBinding
 import com.example.marveldb.databinding.ItemListContentBinding
 import com.example.moviedisplay.ui.adapter.MovieAdapter
 import com.example.marveldb.data.model.Character
+import com.example.moviedisplay.ui.adapter.CharacterAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,8 @@ class ItemListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var page:Int =0
     private var limit:Int =20
+
+    private lateinit var listObjetos:MutableList<Character>
 
     private val unhandledKeyEventListenerCompat =
         ViewCompat.OnUnhandledKeyEventListenerCompat { v, event ->
@@ -117,6 +120,7 @@ class ItemListFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             //isLoading.postValue(true)
             val result = getCharactersUseCase()
+            listObjetos = result.data?.results as MutableList<Character>
             Log.e("INFO:::","iS NOT EMPTY"+result)
 
 
@@ -124,7 +128,9 @@ class ItemListFragment : Fragment() {
                 if ( result !=null ) {
                     val manager = GridLayoutManager(activity,2 )
                     recyclerView.layoutManager = manager
-                    recyclerView.adapter = MovieAdapter(result) { character ->
+
+
+                    recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
                         onItemSelected(
                             character
                         )
@@ -132,6 +138,7 @@ class ItemListFragment : Fragment() {
                     //recyclerView.addItemDecoration(decoration)
 
                     getData(page,limit)
+
                     nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
                         override fun onScrollChange(
                             v: NestedScrollView?,
@@ -159,10 +166,15 @@ class ItemListFragment : Fragment() {
 
     private fun getData(page: Int, limit: Int) {
         val offset= page*100;
+        var temporal:List<Character>
         CoroutineScope(Dispatchers.IO).launch {
            var result = repository.getAllCharactersFromApi(offset,100)
+            
+            temporal = result.data?.results as MutableList<Character>
+            temporal.forEach(){crter->listObjetos.add(crter)}
+            
             activity?.runOnUiThread{
-            recyclerView.adapter = MovieAdapter(result) { character ->
+            recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
                 onItemSelected(
                     character
                 )

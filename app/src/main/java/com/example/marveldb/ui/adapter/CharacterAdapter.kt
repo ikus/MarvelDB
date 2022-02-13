@@ -15,19 +15,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MovieAdapter(private val wrapper: CharacterDataWrapper<Character>, private val onClickListener:(Character) -> Unit): RecyclerView.Adapter<MovieViewHolder>() {
+class CharacterAdapter(private val listaDatos: List<Character>?, private val onClickListener:(Character) -> Unit): RecyclerView.Adapter<MovieViewHolder>() {
 
 //    @Inject
 //    internal lateinit var repository: CharacterRepository
 
     //private val maindata: List<Character>? = wrapper.data?.results
-    private val offset:Int = wrapper.data?.offset!!
-    private var index:Int = offset
-    private val limit :Int = wrapper.data?.limit!!
+    //private val offset:Int = wrapper.data?.offset!!
+    //private var index:Int = offset
+    //private val limit :Int = wrapper.data?.limit!!
     //private val mainData: Map<Int?, Character>? = wrapper.data?.results?.map{ it -> index++ to it }?.toMap()
-    private val listadeCharacters:List<Character> =wrapper.data?.results!!
+    //private val listadeCharacters:List<Character> =wrapper.data?.results!!
 
-    private val mainData: MutableMap<Int?, Character>? =   mutableMapOf()   //wrapper.data?.results?.map{ it -> index++ to it }?.toMap()
+    //private val mainData: MutableMap<Int?, Character>? =   mutableMapOf()   //wrapper.data?.results?.map{ it -> index++ to it }?.toMap()
 
 
 
@@ -45,15 +45,20 @@ class MovieAdapter(private val wrapper: CharacterDataWrapper<Character>, private
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item:Character
-        if(position>= limit!!){
+        /*
 
+        if(position>= limit!!){
+           
         }else{
             item = mainData?.get(position)!! //maindata!![position]
             holder.render(item,onClickListener)
         }
+*/
+        item = listaDatos?.get(position)!! //maindata!![position]
+        holder.render(item,onClickListener)
 
     }
 
-    override fun getItemCount(): Int = wrapper.data?.total!!
+    override fun getItemCount(): Int = listaDatos?.size!!
 
 }
