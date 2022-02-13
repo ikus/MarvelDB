@@ -7,12 +7,26 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-
+//import io.reactivex.Single
 
 interface CharacterApiClient {
 
     @GET("v1/public/characters")
-    suspend fun getCharacters(/*@Query("offset") offset: Int, @Query("limit") limit: Int*/): CharacterDataWrapper<Character>
+    suspend fun getCharacters(): CharacterDataWrapper<Character>
+
+    @GET("v1/public/characters")
+    suspend fun getCharacters(@Query("offset") offset: Int, @Query("limit") limit: Int): CharacterDataWrapper<Character>
+
+    //@GET("v1/public/characters")
+    //fun getCharactersSync(@Query("offset") offset: Int, @Query("limit") limit: Int, @Query("nameStartsWith") nameStartsWith: String?): CharacterDataWrapper<Character>
+
+    //@GET("v1/public/characters")
+    //fun getCharactersAsync(@Query("offset") offset: Int, @Query("limit") limit: Int, @Query("nameStartsWith") nameStartsWith: String?): CharacterDataWrapper<Character>
+
+
+    @GET("v1/public/characters/{id}")
+    suspend fun getCharacter(@Path("id") id: Int): CharacterDataWrapper<Character>
+
 
 /*
     @GET("movie/popular?")

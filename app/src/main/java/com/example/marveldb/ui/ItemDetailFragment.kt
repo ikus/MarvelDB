@@ -9,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.marveldb.data.model.Character
 import com.example.marveldb.ui.placeholder.PlaceholderContent
 import com.example.marveldb.databinding.FragmentItemDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A fragment representing a single Item detail screen.
@@ -18,7 +21,28 @@ import com.example.marveldb.databinding.FragmentItemDetailBinding
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
+@AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
+
+    @Inject
+    internal lateinit var getDetailUseCase: GetDetailUseCase
+
+    //@Inject
+    //internal lateinit var repository: MovieRepository
+
+    private var characterId : Int = 0
+    private var character : Character? = null //TODO: cambiar esat clase
+
+    lateinit var item0DetailTextView: TextView
+    lateinit var item1DetailTextView: TextView
+    lateinit var item2DetailTextView: TextView
+    lateinit var item3DetailTextView: TextView
+    lateinit var item4DetailTextView: TextView
+
+    // lateinit var fabFavorite: FloatingActionButton
+
+
+
 
     /**
      * The placeholder content this fragment is presenting.

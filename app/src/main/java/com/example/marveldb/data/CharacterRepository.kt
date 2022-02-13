@@ -12,7 +12,21 @@ class CharacterRepository @Inject constructor(
 ){
 
     suspend fun getAllCharactersFromApi(): CharacterDataWrapper<Character> {
-        val response = api.getAllCharacters(0,100)
+        val response = api.getAllCharacters()
         return response
     }
+
+
+    suspend fun getAllCharactersFromApi(offset: Int,limit: Int): CharacterDataWrapper<Character> {
+        val response = api.getAllCharacters(offset,limit)
+        return response
+    }
+
+
+    suspend fun geCharacterFromApi(characterID: Int): CharacterDataWrapper<Character> {
+        val response = api.getCharacter(characterID)
+        return response
+    }
+
+
 }

@@ -10,7 +10,7 @@ import com.example.marveldb.data.model.Character
 class GetCharactersUseCase @Inject constructor(private val repository: CharacterRepository) {
 
     suspend operator fun invoke(): CharacterDataWrapper<Character> {
-        val search = repository.getAllCharactersFromApi()
+        val search = repository.getAllCharactersFromApi(0,100)
 
         //TODO: Refacorizar la pagina qu devuelve
 

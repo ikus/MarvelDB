@@ -92,7 +92,7 @@ class ItemListFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString(
             ItemDetailFragment.ARG_ITEM_ID,
-            "1"//movie.id.toString()
+            movie.id.toString()
         )
 
         findNavController().navigate(R.id.show_item_detail, bundle)
