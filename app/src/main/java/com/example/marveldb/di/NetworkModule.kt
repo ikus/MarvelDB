@@ -24,18 +24,6 @@ object NetworkModule {
     fun provideRetrofit(): Retrofit {
         val client = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
-/*
-            .addInterceptor { chain ->
-                var original: Request = chain.request()
-                val httpUrl: HttpUrl = original.url()
-                    .newBuilder()
-                    .build()
-                original = original.newBuilder()
-                    .url(httpUrl)
-                    .build()
-                chain.proceed(original)
-            }
-*/
             .build()
 
         return Retrofit.Builder()
@@ -50,4 +38,6 @@ object NetworkModule {
     fun provideMovieApiClient(retrofit: Retrofit): CharacterApiClient {
         return retrofit.create(CharacterApiClient::class.java)
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.marveldb.data
 
 import com.example.marveldb.data.model.CharacterDataWrapper
+import com.example.marveldb.data.model.Character
 import com.example.marveldb.data.network.CharacterService
 import javax.inject.Inject
 

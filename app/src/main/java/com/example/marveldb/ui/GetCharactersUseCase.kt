@@ -5,7 +5,7 @@ import android.util.Log
 import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.data.model.CharacterDataWrapper
 import javax.inject.Inject
-
+import com.example.marveldb.data.model.Character
 
 class GetCharactersUseCase @Inject constructor(private val repository: CharacterRepository) {
 

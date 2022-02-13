@@ -10,5 +10,5 @@ data class CharacterDataWrapper<T>(
     @SerializedName("attributionText") var attributionText: String? = null,
     @SerializedName("attributionHTML") var getAttributionHtml: String? = null,
     @SerializedName("etag") var etag: String? = null,
-    @SerializedName("data") var data: CharacterDataContainer<T>? = null
+    @SerializedName("data") var data: CharacterDataContainer? = null
 )

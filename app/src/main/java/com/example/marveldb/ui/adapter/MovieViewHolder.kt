@@ -11,13 +11,15 @@ import com.example.marveldb.databinding.ItemMovieBinding
 
 //import com.example.moviedisplay.databinding.ItemMovieBinding
 //import com.example.moviedisplay.domain.model.Movie
+import com.example.marveldb.data.model.Character
 
 
 class MovieViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
     val binding = ItemMovieBinding.bind(view)
 
-    fun render(movieModel: Movie, onClickListener:(Movie) -> Unit){
+    fun render(movieModel: Character, onClickListener: (Character) -> Unit){
+        val url =movieModel.thumbnail
         Glide.with(binding.imageViewMovie.context).load(
             //TODO: cambiar por los valores de cada item
             //"http://image.tmdb.org/t/p/w185/"+movieModel.poster_path+"?api_key=28b80b41ebf312e0ba2909f4472d67b6"
