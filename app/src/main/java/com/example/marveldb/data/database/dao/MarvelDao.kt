@@ -1,5 +1,6 @@
 package com.example.marveldb.data.database.dao
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,6 +11,9 @@ import com.example.marveldb.data.model.Character
 interface MarvelDao {
     @Query("SELECT * FROM character") //" ORDER BY author DESC")
     suspend fun getAllCharacters():List<Character>
+
+    @Query("SELECT * FROM character") //" ORDER BY author DESC")
+    suspend fun getCursorAllCharacters():Cursor
 
 
     @Query("SELECT * FROM character WHERE id = :movieId") //" ORDER BY author DESC")

@@ -105,9 +105,9 @@ class ItemListFragment : Fragment() {
     fun onItemSelected(movie:  com.example.marveldb.data.model.Character){
         //TODO: Esta es la parte que hayq ue refactorizar.
         val bundle = Bundle()
-        bundle.putString(
+        bundle.putInt(
             ItemDetailFragment.ARG_ITEM_ID,
-            movie.id.toString()
+            movie.id!!
         )
 
         findNavController().navigate(R.id.show_item_detail, bundle)

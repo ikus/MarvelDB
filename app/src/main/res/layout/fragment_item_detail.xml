@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail_container"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ItemDetailHostActivity"
@@ -20,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
+            app:collapsedTitleTextColor="@color/text1"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -28,7 +28,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                app:titleTextColor="@color/text1"
+                tools:text="Detalle 2"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <ImageView
+                android:id="@+id/imageViewDetailMovie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_horizontal"
+                android:scaleType="centerCrop"
+                android:background="@color/teal_700"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -40,17 +55,71 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/item_detail"
-            style="?android:attr/textAppearanceLarge"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/container_horizontal_margin"
-            android:paddingTop="16dp"
-            android:paddingEnd="@dimen/container_horizontal_margin"
-            android:paddingBottom="16dp"
-            android:textIsSelectable="true"
-            tools:context="com.example.marveldb.ui.ItemDetailFragment" />
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/item_detail"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:textColor="@color/text0"
+                tools:text="Batman"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:textIsSelectable="true"
+                tools:context="com.example.marveldb.ui.ItemDetailFragment" />
+
+            <TextView
+                android:id="@+id/item_1_detail"
+                tools:text="Detalle 2"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:textColor="@color/text1"
+                android:textIsSelectable="true"
+                tools:context="com.example.moviedisplay.ui.ItemDetailFragment" />
+
+            <TextView
+                android:id="@+id/item_2_detail"
+                tools:text="Detalle 2"
+                android:textColor="@color/text2"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:textIsSelectable="true"
+                tools:context="com.example.moviedisplay.ui.ItemDetailFragment" />
+
+
+            <TextView
+                android:id="@+id/item_3_detail"
+                tools:text="Detalle 2"
+                android:textColor="@color/text0"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:textIsSelectable="true"
+                tools:context="com.example.moviedisplay.ui.ItemDetailFragment" />
+
+
+        </LinearLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 

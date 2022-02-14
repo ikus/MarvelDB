@@ -29,6 +29,7 @@ interface CharacterApiClient {
 
 
 /*
+
     @GET("movie/popular?")
     suspend fun getPopularMovie(@Query("page") page: Int): Response<SearchModel?>?
 
