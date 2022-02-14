@@ -38,6 +38,7 @@ class ItemListFragment : Fragment() {
 
     @Inject
     internal lateinit var getCharactersUseCase: GetCharactersUseCase
+
     @Inject
     internal lateinit var repository: CharacterRepository
 
@@ -139,6 +140,7 @@ class ItemListFragment : Fragment() {
 
                     getData(page,limit)
 
+                    /*
                     nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
                         override fun onScrollChange(
                             v: NestedScrollView?,
@@ -156,6 +158,8 @@ class ItemListFragment : Fragment() {
                         }
 
                     } )
+
+                     */
                 }else{
                     //TODO:Show error
                 }
@@ -165,9 +169,27 @@ class ItemListFragment : Fragment() {
     }
 
     private fun getData(page: Int, limit: Int) {
-        val offset= page*100;
+        var offset= page*100;
+        var pagina = page
         var temporal:List<Character>
+        var count = 0
+
+
+
         CoroutineScope(Dispatchers.IO).launch {
+            do{
+                Log.e("PAGE:::",pagina.toString())
+                Log.e("OFFSET:::",offset.toString())
+                var result = repository.getAllCharactersFromApi(offset,100)
+                count = result.data?.count!!
+                if(count>0)
+                    repository.insertCharacters(result.data?.results ?: emptyList())
+                pagina++
+                offset = pagina * 100
+            } while(count>0)
+
+            /*
+
            var result = repository.getAllCharactersFromApi(offset,100)
             
             temporal = result.data?.results as MutableList<Character>
@@ -180,6 +202,8 @@ class ItemListFragment : Fragment() {
                 )
             }
             }
+
+             */
         }
     }
 

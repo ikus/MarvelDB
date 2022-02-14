@@ -13,19 +13,17 @@ class GetCharactersUseCase @Inject constructor(private val repository: Character
         val search = repository.getAllCharactersFromApi(0,100)
 
         //TODO: Refacorizar la pagina qu devuelve
+        if(search!=null){
+            Log.i("INFO::","Tenemos resultadas" +search.toString())
 
-        /*
-        if(search.totalPages>0){
-            Log.i("INFO::","Tenemos resultadas" +search.totalResults)
-            //repository.clearMovies()
-            repository.insertMovies(search.results?.map { it.toDatabase() } ?: emptyList())
-            search.results
-            return   search.results?.map { it.toDomain() }
+            repository.insertCharacters(search.data?.results ?: emptyList())
+
+            return search//.results?.map { it.toDomain() }
         }else{
             //Obter de la base de datos
-            return repository.getAllMoviesFromDatabase()
+            search.data?.results = repository.getAllCharactersFromDatabase()
+            return search
         }
-*/
         return  search
     }
 

@@ -21,11 +21,12 @@ import javax.inject.Inject
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
+
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
 
-    @Inject
-    internal lateinit var getDetailUseCase: GetDetailUseCase
+    //@Inject
+    //internal lateinit var getDetailUseCase: GetDetailUseCase
 
     //@Inject
     //internal lateinit var repository: MovieRepository
