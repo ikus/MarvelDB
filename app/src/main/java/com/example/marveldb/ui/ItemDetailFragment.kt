@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.data.model.Character
-import com.example.marveldb.ui.placeholder.PlaceholderContent
 import com.example.marveldb.databinding.FragmentItemDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -23,18 +22,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItemListFragment]
- * in two-pane mode (on larger screen devices) or self-contained
- * on handsets.
- */
 
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
 
-//@Inject
-    //internal lateinit var getDetailUseCase: GetDetailUseCase
 
     @Inject
     internal lateinit var repository: CharacterRepository
@@ -47,16 +38,8 @@ class ItemDetailFragment : Fragment() {
     lateinit var item2DetailTextView: TextView
     lateinit var item3DetailTextView: TextView
     lateinit var item4DetailTextView: TextView
-
-    // lateinit var fabFavorite: FloatingActionButton
-
-
     lateinit var imageViewDetailMovie: ImageView
     var chracterId: Int = 0
-    /**
-     * The placeholder content this fragment is presenting.
-     */
-    //private var item: PlaceholderContent.PlaceholderItem? = null
 
     private var item: Character? = null
 
@@ -84,10 +67,6 @@ class ItemDetailFragment : Fragment() {
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the placeholder content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                //item = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
                 chracterId = it.getInt(ARG_ITEM_ID)
             }
         }
@@ -147,10 +126,6 @@ class ItemDetailFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
         const val ARG_ITEM_ID = "item_id"
     }
 

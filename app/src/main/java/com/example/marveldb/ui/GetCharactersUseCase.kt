@@ -12,7 +12,7 @@ class GetCharactersUseCase @Inject constructor(private val repository: Character
     suspend operator fun invoke(): CharacterDataWrapper<Character> {
         val dbupdated = prefs.getDBUpdated()
         if(dbupdated){
-            //Obter de la base de datos
+            //Obtenerr de la base de datos
             var search = CharacterDataWrapper<Character>()
             search.data = CharacterDataContainer(0,100,0,0,null)
             search.data?.results = repository.getAllCharactersFromDatabase(50,0)
@@ -21,7 +21,7 @@ class GetCharactersUseCase @Inject constructor(private val repository: Character
             val search = repository.getAllCharactersFromApi(0,100)
             Log.i("INFO::","Tenemos resultadas" +search.toString())
             repository.insertCharacters(search.data?.results ?: emptyList())
-            return search//.results?.map { it.toDomain() }
+            return search
         }
     }
 }

@@ -23,11 +23,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.marveldb.CharactersMarvelApp.Companion.prefs
 import com.example.marveldb.data.CharacterRepository
-import com.example.marveldb.data.Prefs
-import com.example.marveldb.ui.placeholder.PlaceholderContent;
 import com.example.marveldb.databinding.FragmentItemListBinding
-import com.example.marveldb.databinding.ItemListContentBinding
-import com.example.moviedisplay.ui.adapter.MovieAdapter
+
 import com.example.marveldb.data.model.Character
 import com.example.moviedisplay.ui.adapter.CharacterAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -95,14 +92,10 @@ class ItemListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         ViewCompat.addOnUnhandledKeyEventListener(view, unhandledKeyEventListenerCompat)
-
-        //val recyclerView: RecyclerView = binding.itemList
-
         recyclerView =  binding.itemList
         nestedScrollView = view.findViewById(R.id.item_list_container)
         progressBar = view.findViewById(R.id.progress_bar)
-        // Leaving this not using view binding as it relies on if the view is visible the current
-        // layout configuration (layout, layout-sw600dp)
+
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         setupRecyclerView(recyclerView, itemDetailFragmentContainer)
@@ -188,19 +181,6 @@ class ItemListFragment : Fragment() {
                 } while(count>0)
                 prefs.saveDBUpdated(true)
 
-
-                /*
-                var result = repository.getAllCharactersFromApi(offset,100)
-                temporal = result.data?.results as MutableList<Character>
-                temporal.forEach(){crter->listObjetos.add(crter)}
-                activity?.runOnUiThread{
-                recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
-                    onItemSelected(
-                        character
-                    )
-                }
-                }
-                 */
             }
         }else{//TODO: get form DB info
             CoroutineScope(Dispatchers.IO).launch {

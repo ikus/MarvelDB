@@ -1,6 +1,6 @@
 package com.example.marveldb.data
 
-import android.database.Cursor
+
 import com.example.marveldb.data.database.dao.MarvelDao
 import com.example.marveldb.data.model.CharacterDataWrapper
 import com.example.marveldb.data.model.Character

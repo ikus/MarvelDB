@@ -6,27 +6,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldb.R
-import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.data.model.ApiImage
-import com.example.marveldb.data.model.CharacterDataContainer
-import com.example.marveldb.data.model.CharacterDataWrapper
 import com.example.marveldb.data.model.Character
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-class CharacterCursorAdapter(private val cursorDatos: Cursor?, private val onClickListener:(Character) -> Unit): RecyclerView.Adapter<MovieViewHolder>() {
+class CharacterCursorAdapter(private val cursorDatos: Cursor?, private val onClickListener:(Character) -> Unit): RecyclerView.Adapter<CharacterViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater =  LayoutInflater.from(parent.context)
-        return MovieViewHolder(layoutInflater.inflate(R.layout.item_movie,parent,false))
+        return CharacterViewHolder(layoutInflater.inflate(R.layout.item_movie,parent,false))
     }
 
     @SuppressLint("Range")
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val item:Character
         cursorDatos?.moveToPosition(position)
         var id = cursorDatos?.getInt(cursorDatos?.getColumnIndex("id"))
