@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldb.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.marveldb.CharactersMarvelApp.Companion.prefs
 import com.example.marveldb.data.CharacterRepository
+import com.example.marveldb.data.Prefs
 import com.example.marveldb.ui.placeholder.PlaceholderContent;
 import com.example.marveldb.databinding.FragmentItemListBinding
 import com.example.marveldb.databinding.ItemListContentBinding
@@ -137,7 +139,7 @@ class ItemListFragment : Fragment() {
                     }
                     //recyclerView.addItemDecoration(decoration)
 
-                    var dbupdated=true
+                    var dbupdated=prefs.getDBUpdated()
                     if(!dbupdated) getData(page,limit)
 
 
@@ -188,9 +190,9 @@ class ItemListFragment : Fragment() {
                 pagina++
                 offset = pagina * 100
             } while(count>0)
-
+            prefs.saveDBUpdated(true)
             /*
-           var result = repository.getAllCharactersFromApi(offset,100)
+            var result = repository.getAllCharactersFromApi(offset,100)
             temporal = result.data?.results as MutableList<Character>
             temporal.forEach(){crter->listObjetos.add(crter)}
             activity?.runOnUiThread{
