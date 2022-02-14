@@ -124,7 +124,6 @@ class ItemListFragment : Fragment() {
             listObjetos = result.data?.results as MutableList<Character>
             Log.e("INFO:::","iS NOT EMPTY"+result)
 
-
             activity?.runOnUiThread{
                 if ( result !=null ) {
                     val manager = GridLayoutManager(activity,2 )
@@ -138,7 +137,9 @@ class ItemListFragment : Fragment() {
                     }
                     //recyclerView.addItemDecoration(decoration)
 
-                    getData(page,limit)
+                    var dbupdated=true
+                    if(!dbupdated) getData(page,limit)
+
 
                     /*
                     nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
@@ -189,12 +190,9 @@ class ItemListFragment : Fragment() {
             } while(count>0)
 
             /*
-
            var result = repository.getAllCharactersFromApi(offset,100)
-            
             temporal = result.data?.results as MutableList<Character>
             temporal.forEach(){crter->listObjetos.add(crter)}
-            
             activity?.runOnUiThread{
             recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
                 onItemSelected(
@@ -202,7 +200,6 @@ class ItemListFragment : Fragment() {
                 )
             }
             }
-
              */
         }
     }

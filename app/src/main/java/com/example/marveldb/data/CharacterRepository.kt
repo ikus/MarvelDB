@@ -1,5 +1,6 @@
 package com.example.marveldb.data
 
+import android.database.Cursor
 import com.example.marveldb.data.database.dao.MarvelDao
 import com.example.marveldb.data.model.CharacterDataWrapper
 import com.example.marveldb.data.model.Character
@@ -48,6 +49,18 @@ class CharacterRepository @Inject constructor(
         return response
     }
 
+
+    suspend fun getAllCharactersFromDatabase(limit:Int,offset:Int):List<Character>{
+        val response: List<Character> = marvelDao.getAllCharacters(limit,offset)
+        return response
+    }
+
+    /*
+    suspend fun getCursorAllCharactersFromDatabase(): Cursor {
+        val response: Cursor = marvelDao.getCursorAllCharacters()
+        return response
+    }
+*/
 
     suspend fun insertCharacters(characters:List<Character>){
         marvelDao.insertAll(characters)

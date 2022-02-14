@@ -26,14 +26,12 @@ class CharacterAdapter(private val listaDatos: List<Character>?, private val onC
     //private val limit :Int = wrapper.data?.limit!!
     //private val mainData: Map<Int?, Character>? = wrapper.data?.results?.map{ it -> index++ to it }?.toMap()
     //private val listadeCharacters:List<Character> =wrapper.data?.results!!
-
     //private val mainData: MutableMap<Int?, Character>? =   mutableMapOf()   //wrapper.data?.results?.map{ it -> index++ to it }?.toMap()
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater =  LayoutInflater.from(parent.context)
-
 
         /*
         listadeCharacters.forEach { crter ->
@@ -46,17 +44,15 @@ class CharacterAdapter(private val listaDatos: List<Character>?, private val onC
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item:Character
         /*
-
         if(position>= limit!!){
            
         }else{
             item = mainData?.get(position)!! //maindata!![position]
             holder.render(item,onClickListener)
         }
-*/
+        */
         item = listaDatos?.get(position)!! //maindata!![position]
         holder.render(item,onClickListener)
-
     }
 
     override fun getItemCount(): Int = listaDatos?.size!!
