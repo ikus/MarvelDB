@@ -1,6 +1,5 @@
 package com.example.marveldb.ui
 
-
 import android.util.Log
 import com.example.marveldb.data.CharacterRepository
 //import com.example.marveldb.data.database.entities.toDatabase
@@ -11,16 +10,13 @@ import com.example.marveldb.data.CharacterRepository
 //import com.example.marveldb.domain.model.toDomain
 import com.example.marveldb.data.model.Character
 import javax.inject.Inject
-//import kotlin.NotImplementedError as NotImplementedError1("Falta implementar")
+
 
 class GetDetailUseCase @Inject constructor(private val repository: CharacterRepository) {
-
-    suspend operator fun invoke(movieID:Int): Character {
-        //val search = repository.getDetailMovieFromApi(movieID)
-        val detail= repository.getAllCharactersFromApi()//repository.getAllCharactersFromApi()   //.getDetailMovieFromApi(movieID)
+    suspend operator fun invoke(characterID:Int): Character {
+        val detail= repository.geCharacterFromApi(characterID)
         Log.d("DETAIIL::", detail.toString())
         //TODO: Refacorizar la pagina qu devuelve
-
         /*
         if(detail != null){
             Log.i("INFO::","Tenemos detalles" +detail.originalLanguage)
@@ -30,8 +26,6 @@ class GetDetailUseCase @Inject constructor(private val repository: CharacterRepo
         }else{
             //Obter de la base de datos
         }
-
-
 */
         return Character()
     }

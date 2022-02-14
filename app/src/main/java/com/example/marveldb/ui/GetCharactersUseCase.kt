@@ -1,6 +1,7 @@
 package com.example.marveldb.ui
 
 import android.util.Log
+import com.example.marveldb.CharactersMarvelApp.Companion.prefs
 import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.data.model.CharacterDataWrapper
 import javax.inject.Inject
@@ -9,7 +10,7 @@ import com.example.marveldb.data.model.CharacterDataContainer
 
 class GetCharactersUseCase @Inject constructor(private val repository: CharacterRepository) {
     suspend operator fun invoke(): CharacterDataWrapper<Character> {
-        val dbupdated = true
+        val dbupdated = prefs.getDBUpdated()
         if(dbupdated){
             //Obter de la base de datos
             var search = CharacterDataWrapper<Character>()

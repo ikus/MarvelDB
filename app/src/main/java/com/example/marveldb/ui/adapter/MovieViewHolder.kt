@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.marveldb.databinding.ItemMovieBinding
 import com.example.marveldb.data.model.Character
 
@@ -23,7 +24,9 @@ class MovieViewHolder(view: View): RecyclerView.ViewHolder(view) {
             //TODO: cambiar por los valores de cada item
             //"https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_xlarge.jpg"
             url
-        ).into(binding.imageViewMovie)
+        )
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(binding.imageViewMovie)
 
         itemView.setOnClickListener{ onClickListener(movieModel) }
     }

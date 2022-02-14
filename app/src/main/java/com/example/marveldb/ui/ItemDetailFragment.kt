@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.marveldb.data.CharacterRepository
 import com.example.marveldb.data.model.Character
 import com.example.marveldb.ui.placeholder.PlaceholderContent
@@ -32,7 +33,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
 
-    //@Inject
+//@Inject
     //internal lateinit var getDetailUseCase: GetDetailUseCase
 
     @Inject
@@ -51,7 +52,7 @@ class ItemDetailFragment : Fragment() {
 
 
     lateinit var imageViewDetailMovie: ImageView
-
+    var chracterId: Int = 0
     /**
      * The placeholder content this fragment is presenting.
      */
@@ -87,10 +88,7 @@ class ItemDetailFragment : Fragment() {
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
                 //item = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                CoroutineScope(Dispatchers.IO).launch {
-                    item = repository.geCharacterFromApi(it.getInt(ARG_ITEM_ID)).data?.results?.get(0)
-                    Log.e("DETALLE:",item?.name!!)
-                }
+                chracterId = it.getInt(ARG_ITEM_ID)
             }
         }
     }
@@ -107,36 +105,45 @@ class ItemDetailFragment : Fragment() {
         itemDetailTextView = binding.itemDetail
 
 
-        //item0DetailTextView = binding.itemDetail
-        //item1DetailTextView = binding.item1Detail!!
-        //item2DetailTextView = binding.item2Detail!!
-        //item3DetailTextView = binding.item3Detail!!
-        //item4DetailTextView = binding.itemDetail
+        item0DetailTextView = binding.itemDetail
+        item1DetailTextView = binding.item1Detail!!
+        item2DetailTextView = binding.item2Detail!!
+        item3DetailTextView = binding.item3Detail!!
+        item4DetailTextView = binding.itemDetail
         //fabFavorite = binding.fab!!
-
-
         imageViewDetailMovie = binding.imageViewDetailMovie!!
-
-        updateContent()
         rootView.setOnDragListener(dragListener)
-
         return rootView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateContent()
+    }
+
     private fun updateContent() {
-        toolbarLayout?.title = item?.name
+        CoroutineScope(Dispatchers.IO).launch {
+            item = repository.geCharacterFromApi(chracterId).data?.results?.get(0)
+            Log.e("DETALLE:",item?.name!!)
+            activity?.runOnUiThread {
+                toolbarLayout?.title = item?.name
 
-        // Show the placeholder content as text in a TextView.
-        item?.let {
-            itemDetailTextView.text = it.description
+                // Show the placeholder content as text in a TextView.
+                item?.let {
+                    itemDetailTextView.text = it.description
+                }
+                val url =item?.thumbnail?.path +"/"+"portrait_uncanny." + item?.thumbnail?.extension
+                Glide.with(requireActivity())
+                    .load(
+                        //"https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_uncanny.jpg"
+                        url
+                    )
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageViewDetailMovie)
+
+            }
         }
-        val url =item?.thumbnail?.path +"/"+"portrait_uncanny." + item?.thumbnail?.extension
-        Glide.with(requireActivity()).load(
-            //"https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_uncanny.jpg"
-        url
-        ).into(imageViewDetailMovie)
-
-
     }
 
     companion object {
