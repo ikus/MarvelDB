@@ -9,9 +9,11 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -46,6 +48,8 @@ class ItemListFragment : Fragment() {
 
     private lateinit var nestedScrollView:NestedScrollView
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
+
     private var page:Int =0
     private var limit:Int =20
 
@@ -96,6 +100,7 @@ class ItemListFragment : Fragment() {
 
         recyclerView =  binding.itemList
         nestedScrollView = view.findViewById(R.id.item_list_container)
+        progressBar = view.findViewById(R.id.progress_bar)
         // Leaving this not using view binding as it relies on if the view is visible the current
         // layout configuration (layout, layout-sw600dp)
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
@@ -141,7 +146,7 @@ class ItemListFragment : Fragment() {
 
                     var dbupdated=prefs.getDBUpdated()
                     if(!dbupdated) getData(page,limit)
-
+                    progressBar.isVisible =false;
 
                     /*
                     nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
