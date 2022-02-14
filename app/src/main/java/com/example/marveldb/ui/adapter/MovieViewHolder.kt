@@ -14,20 +14,16 @@ import com.example.marveldb.data.model.Character
 
 
 class MovieViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
     val binding = ItemMovieBinding.bind(view)
 
-    fun render(movieModel: Character, onClickListener: (Character) -> Unit){
-        val url =movieModel.thumbnail?.path +"/"+"portrait_xlarge." + movieModel.thumbnail?.extension
-        Log.e("URL:::",url)
+    fun render(character: Character, onClickListener: (Character) -> Unit){
+        val url =character.thumbnail?.path +"/"+"portrait_xlarge." + character.thumbnail?.extension
         Glide.with(binding.imageViewMovie.context).load(
-            //TODO: cambiar por los valores de cada item
-            //"https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_xlarge.jpg"
             url
         )
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.imageViewMovie)
-
-        itemView.setOnClickListener{ onClickListener(movieModel) }
+        itemView.setOnClickListener{ onClickListener(character) }
+        //binding.textViewCharacterName.text = character.name
     }
 }

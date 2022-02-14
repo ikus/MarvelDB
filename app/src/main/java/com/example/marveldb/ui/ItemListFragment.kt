@@ -53,7 +53,7 @@ class ItemListFragment : Fragment() {
     private var page:Int =0
     private var limit:Int =20
 
-    private lateinit var listObjetos:MutableList<Character>
+    private var listObjetos:MutableList<Character> = emptyList<Character>().toMutableList()
 
     private val unhandledKeyEventListenerCompat =
         ViewCompat.OnUnhandledKeyEventListenerCompat { v, event ->
@@ -135,20 +135,13 @@ class ItemListFragment : Fragment() {
                 if ( result !=null ) {
                     val manager = GridLayoutManager(activity,2 )
                     recyclerView.layoutManager = manager
-
-
                     recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
                         onItemSelected(
                             character
                         )
                     }
                     //recyclerView.addItemDecoration(decoration)
-
-                    var dbupdated=prefs.getDBUpdated()
-                    if(!dbupdated) getData(page,limit)
-                    progressBar.isVisible =false;
-
-                    /*
+                    getData(page,limit)
                     nestedScrollView.setOnScrollChangeListener(object: NestedScrollView.OnScrollChangeListener{
                         override fun onScrollChange(
                             v: NestedScrollView?,
@@ -166,8 +159,6 @@ class ItemListFragment : Fragment() {
                         }
 
                     } )
-
-                     */
                 }else{
                     //TODO:Show error
                 }
@@ -181,36 +172,60 @@ class ItemListFragment : Fragment() {
         var pagina = page
         var temporal:List<Character>
         var count = 0
+        var dbupdated=prefs.getDBUpdated()
+        if(!dbupdated){
+            showProgressbar(true)
+            CoroutineScope(Dispatchers.IO).launch {
+                do{
+                    Log.e("PAGE:::",pagina.toString())
+                    Log.e("OFFSET:::",offset.toString())
+                    var result = repository.getAllCharactersFromApi(offset,100)
+                    count = result.data?.count!!
+                    if(count>0)
+                        repository.insertCharacters(result.data?.results ?: emptyList())
+                    pagina++
+                    offset = pagina * 100
+                } while(count>0)
+                prefs.saveDBUpdated(true)
 
 
-
-        CoroutineScope(Dispatchers.IO).launch {
-            do{
-                Log.e("PAGE:::",pagina.toString())
-                Log.e("OFFSET:::",offset.toString())
+                /*
                 var result = repository.getAllCharactersFromApi(offset,100)
-                count = result.data?.count!!
-                if(count>0)
-                    repository.insertCharacters(result.data?.results ?: emptyList())
-                pagina++
-                offset = pagina * 100
-            } while(count>0)
-            prefs.saveDBUpdated(true)
-            /*
-            var result = repository.getAllCharactersFromApi(offset,100)
-            temporal = result.data?.results as MutableList<Character>
-            temporal.forEach(){crter->listObjetos.add(crter)}
-            activity?.runOnUiThread{
-            recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
-                onItemSelected(
-                    character
-                )
+                temporal = result.data?.results as MutableList<Character>
+                temporal.forEach(){crter->listObjetos.add(crter)}
+                activity?.runOnUiThread{
+                recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
+                    onItemSelected(
+                        character
+                    )
+                }
+                }
+                 */
             }
+        }else{//TODO: get form DB info
+            CoroutineScope(Dispatchers.IO).launch {
+                var result =   repository.getAllCharactersFromDatabase(100,pagina * 100)
+                listObjetos.addAll(result)
+                activity?.runOnUiThread{
+                    recyclerView.adapter = CharacterAdapter(listObjetos) { character ->
+                        onItemSelected(
+                            character
+                        )
+                    }
+                }
             }
-             */
         }
+        showProgressbar(false)
     }
 
+
+    fun showProgressbar(show:Boolean){
+        activity?.runOnUiThread {
+            progressBar.isVisible =show;
+            if(show==true) progressBar.visibility =   View.VISIBLE
+            else  progressBar.visibility = View.INVISIBLE
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
